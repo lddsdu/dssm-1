@@ -15,7 +15,7 @@ import data_input
 
 flags = tf.app.flags
 FLAGS = flags.FLAGS
-
+# 定义一系列的参数
 flags.DEFINE_string('summaries_dir', 'Summaries', 'Summaries directory')
 flags.DEFINE_float('learning_rate', 0.1, 'Initial learning rate.')
 flags.DEFINE_integer('max_steps', 80000, 'Number of steps to run trainer.')
@@ -33,8 +33,9 @@ TRIGRAM_D = 6231
 NEG = 4
 # query batch size
 query_BS = 100
-# batch size
+# batch size（negative sample）
 BS = query_BS * NEG
+# ???
 L1_N = 400
 L2_N = 120
 
@@ -94,7 +95,7 @@ def variable_summaries(var, name):
         tf.summary.scalar('min/' + name, tf.reduce_min(var))
         tf.summary.histogram(name, var)
 
-
+# 这里具体展示了网络的结构　name_scope在这里的作用貌似只是用来对这段代码做个注释表示其作用
 with tf.name_scope('input'):
     query_batch = tf.sparse_placeholder(tf.float32, shape=[None, TRIGRAM_D], name='QueryBatch')
     doc_positive_batch = tf.sparse_placeholder(tf.float32, shape=[None, TRIGRAM_D], name='DocBatch')
